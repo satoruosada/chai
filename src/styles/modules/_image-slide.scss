@@ -1,7 +1,7 @@
 .cover-slide {
   position: relative;
   overflow: hidden;
-  
+
   &::after {
     content: "";
     position: absolute;
@@ -17,16 +17,10 @@
     &::after {
       opacity: 1;
 
-      @include animation(
-        $name: kf-cover-slide,
-        $duration: 1.6s,
-        $timing-function: ease-in-out,
-        $fill-mode: both
-      );
+      @include animation($name: kf-cover-slide, $duration: 1.6s, $timing-function: ease-in-out, $fill-mode: both);
     }
   }
 }
-
 @keyframes kf-cover-slide {
   0% {
     transform-origin: left;
@@ -52,12 +46,7 @@
   .inview & {
     opacity: 1;
     transition: transform 0.3s ease;
-    @include animation(
-      $name: kf-img-show,
-      $duration: 1.6s,
-      $timing-function: ease-in-out,
-      $fill-mode: none
-    );
+    @include animation($name: kf-img-show, $duration: 1.6s, $timing-function: ease-in-out, $fill-mode: none);
 
     &:hover {
       transform: scale(1.05);
@@ -93,20 +82,15 @@
     transition: background-color 0.3s ease;
     pointer-events: none;
 
-    @include animation(
-      $name: kf-img-show,
-      $duration: 1.6s,
-      $timing-function: ease-in-out,
-      $fill-mode: none
-    );
+    @include animation($name: kf-img-show, $duration: 1.6s, $timing-function: ease-in-out, $fill-mode: none);
   }
   &:hover::before {
     background-color: rgba(0, 0, 0, 0.4);
   }
 }
 
+// 画像アスペクト比対応
 .bg-img-zoom {
-  background-image: url(images/image-1.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -116,10 +100,23 @@
 
 .img-bg50 {
   position: relative;
-  
+
   &::before {
     display: block;
-    content: '';
+    content: "";
     padding-top: 50%;
+  }
+}
+
+.img-bg60 {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+
+  &::after {
+    display: block;
+    content: "";
+    padding-top: 60%;
   }
 }

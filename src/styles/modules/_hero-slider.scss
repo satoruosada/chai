@@ -1,0 +1,36 @@
+.hero {
+    // padding-top: 80px;
+    padding-bottom: 13%;
+    position: relative;
+    &__images {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+
+        &::after {
+            content: "";
+            display: block;
+            padding-top: 55%;
+        }
+    }
+
+    &__ttl {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__bottom {
+        &-img {
+            position: absolute;
+            bottom: -80px;
+            margin-bottom: 80px;
+
+            & > img {
+                width: 100vw;
+            }
+        }
+    }
+}

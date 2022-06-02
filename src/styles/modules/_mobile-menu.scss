@@ -1,258 +1,244 @@
-.back-color {
-    background-color: #2d5a6e;
-    border: 1px solid #ffffff;
-    text-align: center !important;
+.hamburger {
+  width: 75px;
+  height: 75px;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 30;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.hamburger:hover {
+  opacity: 0.7;
+}
+/* ハンバーガーメニューの線の設定（メニューが閉じている時） */
+.hamburger span {
+  width: 35px;
+  height: 2px;
+  background: $cWhite;
+  position: absolute;
+  left: 21px;
+  transition: 0.3s ease-in-out;
+}
+/* 1本目の線の位置を設定 */
+.hamburger span:nth-child(1) {
+  top: 26px;
+}
+/* 2本目の線の位置を設定 */
+.hamburger span:nth-child(2) {
+  top: 37px;
+}
+/* 3本目の線の位置を設定 */
+.hamburger span:nth-child(3) {
+  top: 48px;
+}
+/*
+  ハンバーガーメニューの線の設定（メニューが開いている時）
+  1本目の線を-45度回転
+  */
+.hamburger.active span:nth-child(1) {
+  top: 37px;
+  left: 21px;
+  background: $cWhite;
+  transform: rotate(-45deg);
+}
+/* 2本目と3本目は重ねて45度回転 */
+.hamburger.active span:nth-child(2),
+.hamburger.active span:nth-child(3) {
+  top: 37px;
+  background: $cWhite;
+  transform: rotate(45deg);
+}
+/*
+メニューの設定
+最初は閉じている状態なので、「opacity: 0;」「visibility: hidden;」
+で要素を非表示にしておく
+*/
+#mobile-navi {
+  width: 100%;
+  height: auto;
+  background-color: rgba(35, 24, 21, 0.9);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  visibility: hidden;
+}
+/*
+  ハンバーガーメニューがクリックされた際に、jQueryで#naviにactiveクラスを追加して、
+  メニューを表示させる。
+  */
+#mobile-navi.active {
+  opacity: 1;
+  visibility: visible;
+}
+#mobile-navi .logo {
+  width: 100px;
+  position: absolute;
+  top: 40px;
+  left: 50px;
 }
 
-.fo-color {
-    color: #ffffff !important;
+#mobile-navi .mobile-menu {
+  margin: 30px 0 40px 0;
+  padding: 0;
+}
+#mobile-navi .mobile-menu li {
+  margin-bottom: 40px;
+  list-style: none;
+}
+#mobile-navi .mobile-menu a {
+  color: #fff;
+  font-weight: bold;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 1px;
+    background-color: white;
+  }
+}
+#mobile-navi .btn {
+  width: 250px;
+  border: solid 1px #fff;
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  padding: 15px 0;
+  margin: 0 auto;
+  position: relative;
+  transition: 0.3s ease-in-out;
+}
+/* ボタンの右と下の線は疑似要素で設定 */
+#mobile-navi .btn::after {
+  content: "　";
+  width: 250px;
+  border-right: solid 1px #fff;
+  border-bottom: solid 1px #fff;
+  padding: 15px 0;
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+}
+#mobile-navi .btn:hover {
+  background-color: #fff;
+  color: #ff2a2a;
 }
 
-.mb-mi {
-    margin-bottom: 20px;
-}
-.mobile-menu {
-    position: fixed;
-    right: -60px;
-    top: 60px;
-    width: 300px;
+// .mobile-menu {
+//   &__nav {
+//     // padding-top: 100px;
+//   }
+//   &__ul {
+//     padding: 0;
+//     margin: 0;
+//   }
 
-    &__nav {
-        padding-top: 80px;
-    }
-    &__ul {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 500px;
-        margin: 0 auto;
-    }
+//   &__li {
+//     list-style: none;
+//     width: 100%;
+//     text-align: center;
+//     position: relative;
 
-    &__li {
-        list-style: none;
-        width: 100%;
-        height: 90px;
-        text-align: left;
-        position: relative;
+//     & > a {
+//       text-decoration: none;
+//       color: #534741;
+//       width: 90%;
+//       margin: 0 auto;
+//     }
+//   }
+//   &__link {
+//     display: block;
+//     height: 60px;
+//     line-height: 60px;
+//     color: #534741;
+//     text-decoration: none;
+//     font-size: 20px;
+//     font-weight: bold;
+//   }
 
-        & > a {
-            text-decoration: none;
-            color: #534741;
-            width: 80%;
-            margin-left: auto;
-            margin-right: 0;
-        }
+//   &__btn {
+//     background-color: unset;
+//     border: none;
+//     outline: none !important;
+//     cursor: pointer;
+//     // display: none;
 
-        &-tel {
-            height: 90px;
-            list-style: none;
-        }
-        &-mail {
-            height: 90px;
-            list-style: none;
-        }
+//     & > span {
+//       background-color: black;
+//       width: 35px;
+//       height: 2px;
+//       display: block;
+//       margin-bottom: 9px;
+//       transition: transform 0.7s;
 
-        &:after {
-            content: '';
-          
-            background-position: center;
-            background-size: contain;
-            background-repeat: repeat;
-            display: inline-block;
-            width: 90%;
-            height: 2px;
-            vertical-align: middle;
-        }
+//       &:last-child {
+//         margin-bottom: 0;
+//       }
+//     }
+//   }
 
-    }
-    &__link {
-        display: block;
-        height: 60px;
-        line-height: 60px;
-        color: #534741;
-        text-decoration: none;
-        font-size: 20px;
-        font-weight: bold;
-       
-        & > .fab {
-            font-size: 32px;
-        }
+//   &__cover {
+//     position: fixed;
+//     top: 100px;
+//     left: 0;
+//     right: 0;
+//     z-index: 99;
+//     width: 100%;
+//     height: 0;
+//     background: rgba(255, 255, 255, 1);
+//     opacity: 0;
+//     text-align: center;
+//     transition: opacity 0.6s ease, visibility 0.9s ease;
+//     visibility: hidden;
+//   }
+// }
 
-        &-tel {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
+// .menu-open {
+//   & .mobile-menu {
+//     &__cover {
+//       width: 100%;
+//       height: 100vh;
+//       opacity: 1;
+//       visibility: visible;
+//     }
 
-        &-mail {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-    }
+//     &__item {
 
-    &__image {
-        &-tel {
-            width: 50px;
-            margin-right: 30px;
-            position: relative;
-            top: 23px;
-        }
-        &-mail {
-            width: 50px;
-            margin-right: 30px;
-            position: relative;
-            top: 23px;
-            right: 57px;
-        }
-    }
+//       @for $i from 1 through 5 {
+//         &:nth-child(#{$i}) {
+//           transition-delay: $i * 0.07s;
+//         }
+//       }
+//     }
 
-    &__span {
-        &-tel {
-            font-size: 25px;
-            position: relative;
-            top: 20px;
-        }
-    }
+//     &__btn {
+//       & > span {
+//         background-color: black;
 
-    &__span1 {
-        color: #2d5a6e;
-        font-size: 30px;
-        padding: 12px;
-        position: relative;
-        top: 15px;
-        font-weight: normal;
-    }
-    &__span2 {
-        color: #2d5a6e;
-        font-size: 20px;
-        position: relative;
-        top: 15px;
-        font-weight: normal;
-    }
-
-    &__h1 {
-         & > a:hover {
-             color: #323232;
-             text-decoration: none;
-         }
-    }
-
-    &__btn {
-        background-color: unset;
-        border: none;
-        outline: none !important;
-        cursor: pointer;
-        // display: none;
-
-        & > span {
-            background-color: #ffffff;
-            width: 35px;
-            height: 2px;
-            display: block;
-            margin-bottom: 9px;
-            margin-left: 17px;
-            transition: transform .7s;
-    
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
-    }
-
-    &__cover {
-        position: fixed;
-        left: 0;
-        right: 0;
-        z-index: 99;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        overflow: hidden;
-        background: rgba(255, 255, 255, .9);
-        transition: all 0.8s;
-        transform: translateY(-100%);
-       
-    }
-    &__main {
-        padding: 0;
-        perspective: 2000px;
-        transform-style: preserve-3d;
-    }
-    &__item {
-        list-style: none;
-        display: block;
-        transform: translate3d(0, 0, -1000px);
-        padding: 0 40px;
-        transition: transform 0.3s, opacity 0.2s;
-        opacity: 0;
-    }
-
-    &__h1 {
-        margin: 30px auto 20px;
-        line-height: 50px;
-        text-align: center;
-
-        & > img {
-            width: 100px;
-            height: 50px;
-        }
-
-    }
-    
-    &__about {
-        font-size: 20px;
-        font-weight: normal;
-    }
-    
-    &__text {
-        width: 90%;
-        margin: 0 auto;
-    }
-}
-
-.menu-open {
-    & .mobile-menu {
-        &__cover {
-            height:auto;
-            transition: all 0.8s;
-            visibility: visible;
-            transform: none;
-          
-        }
-
-        &__item {
-            transform: none;
-            opacity: 1;
-
-            @for $i from 1 through 5 {
-                &:nth-child(#{$i}) {
-                    transition-delay: $i * 0.07s;
-                }
-            }
-        }
-
-        &__btn {
-            & > span {
-                background-color:#ffffff;
-
-                &:nth-child(1) {
-                    transition-delay: 70ms;
-                    transform: translateY(11px) rotate(135deg);
-                }
-                &:nth-child(2) {
-                    transition-delay: 0s;
-                    transform:  translateX(-18px) scaleX(0);
-                }
-                &:nth-child(3) {
-                    transition-delay: 140ms;
-                    transform: translateY(-11px) rotate(-135deg);
-                }
-            }
-        }
-    }
-}
+//         &:nth-child(1) {
+//           transition-delay: 70ms;
+//           transform: translateY(11px) rotate(135deg);
+//         }
+//         &:nth-child(2) {
+//           transition-delay: 0s;
+//           transform: translateX(-18px) scaleX(0);
+//         }
+//         &:nth-child(3) {
+//           transition-delay: 140ms;
+//           transform: translateY(-11px) rotate(-135deg);
+//         }
+//       }
+//     }
+//   }
+// }

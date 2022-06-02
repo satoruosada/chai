@@ -2,11 +2,10 @@
 @import 'modules/mixin';
 @import 'modules/appear';
 @import 'modules/button';
+@import 'modules/hero-slider';
 @import 'modules/text-animation';
 @import 'modules/image-slide';
 @import 'modules/mobile-menu';
-@import 'modules/slick';
-@import 'modules/slide-down';
 
 @import "breakpoints/base";
 @media all and (-ms-high-contrast: none) {
@@ -24,16 +23,12 @@
 
 }
 
-
-
 @import "breakpoints/780up";
 @import"breakpoints/ie780up";
 
 @import "breakpoints/600up";
 @import"breakpoints/ie600up";
 
-@import "breakpoints/560up";
-@import"breakpoints/ie560up";
 
 @import "breakpoints/480up";
 @import"breakpoints/ie480up";

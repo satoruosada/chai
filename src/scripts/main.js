@@ -1,189 +1,143 @@
-
-document.addEventListener('DOMContentLoaded' , function(){
-    const cb = function (el, inview) {
-      if(inview) {
-        const ta = new TweenTextAnimation(el);
-        ta.animate();
-      }
-  }
-  
-  const so = new ScrollObserver('.tween-animate-title', cb);
-  
-  
-  const _inviewAnimation = function(el, inview){
-    if(inview){
-      el.classList.add('inview');
-    }else{
-      el.classList.remove('inview');
-    }
-  }
-  const so2 = new ScrollObserver('.appear', _inviewAnimation);
-  
-  
-  const header = document.querySelector('.header');
-  
-  const _navAnimation = function(el, inview){
-    if(inview) {
-      header.classList.remove('triggered');
-  } else {
-      header.classList.add('triggered');
-  }
-  }
-  
-  const so3 = new ScrollObserver('.nav-trigger', _navAnimation, {once: false});
-  
-  new MobileMenu();
-  });
-  
-
-
-
-//パララックスios対応
-$(function () {
-    const ua = navigator.userAgent.toLowerCase();
-    // alert(ua);
-    if (ua.indexOf('iphone') > -1 || (ua.indexOf('android') > -1 && ua.indexOf('mobile') > -1)) {
-        // スマートフォン
-        // alert('スマートフォン');
-        $('body').addClass('is-ios');
-  
-    } else if (ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document) {
-        // タブレット
-        // alert('タブレット');
-        $('body').addClass('is-ios');
-    } else {
-        // PC
-        // alert('PC');
-        $('body').removeClass('is-ios');
-    }
-})
-
-
-// メイン画像スライド
-$(document).on('ready', function () {
-  $(".full-screen_one").slick({
-    centerMode: true,
-    centerPadding: '5%',
-    dots: true,
-    autoplay: false,
-    autoplaySpeed: 10000,
-    speed: 1000,
-    infinite: true
-  });
-  $(".full-screen_one").on("afterChange", function (event, slick, currentSlide, nextSlide) {
-    switch (currentSlide) {
-      case 0:
-        // 1枚目のスライド
-        $(this).slick("slickSetOption", "autoplaySpeed", 10000);
-        break;
-
-      default:
-        // その他のスライド
-        $(this).slick("slickSetOption", "autoplaySpeed", 3500);
-        break;
-    }
-  });
+document.addEventListener('DOMContentLoaded', function () {
+    const main = new Main();
 });
 
+class Main {
+    constructor() {
+        this.header = document.querySelector('.header');
+        this.sides = document.querySelectorAll('.side');
+        this._observers = [];
+        this._init();
+    }
 
-// トップへのボタン
-jQuery(function($){
+    set observers(val) {
+        this._observers.push(val);
+    }
 
-  var sideBar = $('.footer__scroll');
-  sideBar.hide();
-  
-  $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        sideBar.fadeIn();
-      } else {
-        sideBar.fadeOut();
-      }
-  });
-});
-// トップへのボタン
-jQuery(function($){
+    get observers() {
+        return this._observers;
+    }
 
-  var sideBar = $('.footer__scroll-02');
-  sideBar.hide();
-  
-  $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        sideBar.fadeIn();
-      } else {
-        sideBar.fadeOut();
-      }
-  });
-});
+    _init() {
+        // new MobileMenu();
+        // this.hero = new HeroSlider('.swiper-container');
+        Pace.on('done', this._paceDone.bind(this));
+    }
 
-// レスポンシブ用トップへのボタン
-var pagetopBtn = $('.footer__scroll-res,.footer__scroll-02-res');
-    pagetopBtn.hide();
- 
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            pagetopBtn.fadeIn();
-        } else {
-            pagetopBtn.fadeOut();
+    _paceDone() {
+        this._scrollInit();
+    }
+
+    _inviewAnimation(el, inview) {
+        if(inview) {
+            el.classList.add('inview');
+        }else {
+            el.classList.remove('inview');
         }
-    });
- 
-    $(window).scroll(function () {
-        var height = $(document).height();
-        var position = $(window).height() + $(window).scrollTop();
-        var footer = $("footer").outerHeight();
-        if ( height - position  < footer) {
-            pagetopBtn.css({
-                bottom : 180
-            });
+    }
+
+    _navAnimation(el, inview) {
+        if(inview) {
+            this.header.classList.remove('triggered');
         } else {
-            pagetopBtn.css({
-                position : "fixed",
-                bottom: 30
-            });
+            this.header.classList.add('triggered');
         }
+    }
+
+    _sideAnimation(el, inview) {
+        if(inview) {
+            this.sides.forEach(side => side.classList.add('inview'));
+        } else {
+            this.sides.forEach(side => side.classList.remove('inview'));
+        }
+    }
+
+    _textAnimation(el, inview) {
+        if(inview) {
+            const ta = new TweenTextAnimation(el);
+            ta.animate();
+        }
+    }
+
+    _toggleSlideAnimation(el, inview) {
+        if(inview) {
+            this.hero.start();
+        } else {
+            this.hero.stop();
+        }
+    }
+
+    _destroyObservers() {
+        this.observers.forEach(ob => {
+            ob.destroy();
+        });
+    }
+
+    destroy() {
+        this._destroyObservers();
+    }
+
+    _scrollInit() {
+        this.observers = new ScrollObserver('.nav-trigger', this._navAnimation.bind(this), {once: false});
+        this.observers = new ScrollObserver('.cover-slide', this._inviewAnimation);
+        this.observers = new ScrollObserver('.appear', this._inviewAnimation);
+        this.observers = new ScrollObserver('.tween-animate-title', this._textAnimation, {rootMargin: "-200px 0px"});
+        // this.observers = new ScrollObserver('.swiper-container', this._toggleSlideAnimation.bind(this), {once: false});
+        // this.observers = new ScrollObserver('#main-content', this._sideAnimation.bind(this), {once: false, rootMargin: "-300px 0px"});
+    }
+}
+
+
+// フッタースクロールボタン
+$(function() {
+    // 変数にクラスを入れる
+    var btn = $('.button');
+  
+    //スクロールしてページトップから100に達したらボタンを表示
+    $(window).on('load scroll', function(){
+      if($(this).scrollTop() > 100) {
+        btn.addClass('active');
+      }else{
+        btn.removeClass('active');
+      }
     });
-
-    pagetopBtn.click(function () {
-        $('body,html').animate({
-            scrollTop: 0
-        }, 500);
-        return false;
+  
+    //フッターの手前でボタンを止める
+    $(window).on('load scroll', function(){
+      var height = $(document).height(), //ドキュメントの高さ
+          position = window.innerHeight + $(window).scrollTop(), //ページトップから現在地までの高さ
+          footer = $('footer').height(); //フッターの高さ
+      if ( height - position  < footer ){
+        btn.addClass('absolute');
+      } else {
+        btn.removeClass('absolute');
+      }
     });
-
-
-// アコーディオンメニュー
-jQuery(function(){
-  //.accordion_oneの中の.accordion_headerがクリックされたら
-  jQuery('.accordion_header').click(function(){
-    //クリックされた.accordion_oneの中の.accordion_headerに隣接する.accordion_innerが開いたり閉じたりする。
-    jQuery(this).next('.accordion_inner').slideToggle();
-    jQuery(this).toggleClass("open");
     
+    //スクロールしてトップへ戻る
+    btn.on('click',function () {
+      $('body,html').animate({
+        scrollTop: 0
+      });
+    });
   });
-  //閉じるボタンがクリックされたら
-  jQuery('.s_05 a.close_btn').click(function () {
-    //クリックされたa.close_btnの親要素の.accordion_oneの.accordion_innerを閉じる。
-    jQuery(this).parents('.accordion_inner').slideUp();
-    jQuery('.accordion_header').removeClass("open");
-  });
-});
 
-// ページ内リンク
-jQuery(function(){
-  // 閉じるボタンをクリックした場合に処理
-  jQuery('.s_05 a.close_btn').click(function() {
-    // 移動先を0px上にずらす
-    var adjust = 200;
-    // スクロールの速度
-    var speed = 500; // ミリ秒
-    // アンカーの値取得
-    var href= jQuery(this).attr("href");
-    // 移動先を取得
-    var target = jQuery(href == "#" || href == "" ? 'html' : href);
-    // 移動先を調整
-    var position = target.offset().top - adjust;
-    // スムーススクロール
-    jQuery('body,html').animate({scrollTop:position}, speed, 'swing');
-    return false;
-  });
-});
+
+// aタグスムーズスクロール
+  $(function(){
+    // #で始まるアンカーをクリックした場合に処理
+    $('a[href^=#]').click(function() {
+       // スクロールの速度
+       var speed = 400; // ミリ秒
+       // アンカーの値取得
+       var href= $(this).attr("href");
+       // 移動先を取得
+       var target = $(href == "#" || href == "" ? 'html' : href);
+       // 移動先を数値で取得
+       var position = target.offset().top;
+       // スムーススクロール
+       $('body,html').animate({scrollTop:position}, speed, 'swing');
+       return false;
+    });
+ });
+

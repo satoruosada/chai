@@ -1,43 +1,7 @@
-@media screen and (max-width:1280px) {
-
+@media screen and (max-width: 1280px) {
     .header {
-        background: #ffffff;
-
-    }
-    .category {
-        &__ttl {
-            font-size: 20px;
-        }
-        &__txt {
-            top: 45%;
-        }
-    }
-
-    .info {
-        &__panel {
-            margin-left: 50px;
-        }
-        &__inner {
-            width: 80%;
-        }
-    }
-
-    .main {
-        &__inner {
-            width: 90%;
-        }
-
-        &__panel {
-            width: 100%;
-        }
-    }
-
-    .top {
-        &__news {
-            &::after {
-                padding-top: 30%;
-            }
+        &__li {
+            margin-left: 30px;
         }
     }
 }
-

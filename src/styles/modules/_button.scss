@@ -1,79 +1,102 @@
-
-
 .btn {
- 
-  &.filled {
-    width: 170px;
-    height: 80px;
-    background-color: #2D5A6E;
+  text-align: center;
+  color: $cWhite;
+  position: relative;
+  display: inline-block;
+  background-color: #5d3e3e;
+  border-radius: 25px;
+  padding: 10px 40px;
+  margin: 60px auto;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none !important;
+  width: 300px;
+  height: 50px;
+  box-sizing: border-box;
+
+  &:hover {
+    color: #fff;
+    opacity: 0.7;
+  }
+
+  &::after {
+    content: "";
+    background-image: url(../../images/yajirushi.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translate(-10%, -50%);
+    width: 7px;
+    height: 12px;
+  }
+
+  &-ec {
     text-align: center;
-    color: #ffffff;
-    font-size: 10px;
-  }
+    color: $cWhite;
+    position: relative;
+    display: inline-block;
+    background-color: #5d3e3e;
+    border-radius: 25px;
+    padding: 10px 40px;
+    margin: 60px auto;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none !important;
+    width: 300px;
+    height: 50px;
+    box-sizing: border-box;
+    &:hover {
+      color: #fff;
+      opacity: 0.7;
+    }
 
-  &__ichiran {
-     font-size: 14px;
-     width: 200px;
-     color: #ffffff;
-     border: 1px solid #ffffff;
-     padding: 10px 50px;
-     position: relative;
-
-     &:hover {
-       text-decoration: none;
-       color: white;
-     }
-
-     &-second {
-      font-size: 14px;
-      width: 200px;
-      color: #2D5A6E;
-      border: 1px solid #2D5A6E;
-      padding: 10px 50px;
-      position: relative;
-     }
-
-
-     &-res {
-      font-size: 14px;
-      width: 200px;
-      color: #2D5A6E;
-      border: 1px solid #2D5A6E;
-      padding: 7px 50px;
+    &::after {
+      content: "";
+      background-image: url(../../images/about/cart.svg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
       position: absolute;
-      bottom: 10%;
-      left: 50%;
-      transform: translate(-50%, -10%);
-
-      &:hover {
-        text-decoration: none;
-        color: #2D5A6E;
-      }
-
-     }
-  }
-  &__detail {
-     font-size: 14px;
-     width: 200px;
-     color: #ffffff;
-     border: 1px solid #ffffff;
-     background-color: #64645a;
-     opacity: 0.6;
-     padding: 8px 50px;
-     position: relative;
-     top: 17px;
-
-     &::after {
-         content: '';
-         position: absolute;
-         top: 50%;
-         right: 0;
-     }
+      top: 50%;
+      right: 10%;
+      transform: translate(-10%, -50%);
+      width: 25px;
+      height: 23px;
+    }
   }
 
-  &-yajirushi {
-      position: relative;
-      top: -4px;
-      left: 20px;
+  &-wrap {
+    text-align: center;
   }
+}
+
+// フッターボタン
+.button {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 30;
+
+  /*デフォルトで非表示にする*/
+  opacity: 0;
+  visibility: hidden;
+}
+
+/*このクラスが付与されると表示する*/
+.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*このクラスが付与されると表示する*/
+.absolute {
+  position: absolute;
+  top: -80px;
+  bottom: auto;
 }
